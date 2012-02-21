@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Conversation Ajax Test</h1>
+
+	<t:eventlink zone="testzone" event="loadzone">Load Zone</t:eventlink>
+
+	<t:zone id="testzone">
+		<t:block id="testblock"><t:eventlink event="inzone">In Zone</t:eventlink></t:block>
+	</t:zone>
+
+</html>
