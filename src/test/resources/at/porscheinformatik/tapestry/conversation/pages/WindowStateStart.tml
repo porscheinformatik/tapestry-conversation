@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Conversation Window State between Pages - Step 1</h1>
+    <p>Saves the entered data in a window state. Redirecs to another page where the entered data
+    is read from the window state.</p>
+    
+    
+    
+    <t:form>
+    	<t:beaneditor object="windowStateBean" />
+    	<t:linkSubmit>Save</t:linkSubmit>
+    </t:form>
+
+	<p>Entered data</p>
+	<t:beandisplay object="windowStateBean" />
+	
+	
+    <p>
+    	<ul>
+    		<li><t:pagelink page="WindowStateStart" target="_blank">Open this window in a new tab</t:pagelink></li>
+    		<li><t:actionlink t:id="refresh">Refresh</t:actionlink></li>
+    	</ul>
+    </p>
+    
+</html>

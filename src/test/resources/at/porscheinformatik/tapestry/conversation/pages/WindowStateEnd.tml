@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Conversation Window State between Pages - Step 2</h1>
+    
+    <p>Shows the entered data from the <t:pageLink page="WindowStateStart">previous page</t:pageLink></p>
+    
+    <t:if test="windowStateBean">
+	   	<t:beandisplay object="windowStateBean">
+	   	</t:beandisplay>
+	   	<p:else>No Window State object found!!!</p:else>
+	</t:if>
+    
+</html>

@@ -16,21 +16,26 @@ import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer;
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
 import at.porscheinformatik.tapestry.conversation.internal.ConversationLinkTransformer;
 import at.porscheinformatik.tapestry.conversation.internal.InternalWindowContext;
 import at.porscheinformatik.tapestry.conversation.internal.WindowContextImpl;
+import at.porscheinformatik.tapestry.conversation.internal.WindowStateManagerImpl;
+import at.porscheinformatik.tapestry.conversation.internal.transform.WindowStateWorker;
 
 /**
- * Tapestry IoC Module for poco-tapestry5-conversation.
- * CHECKSTYLE:OFF
+ * Tapestry IoC Module for poco-tapestry5-conversation. CHECKSTYLE:OFF
  */
 public class ConversationModule
 {
+
     public static void bind(ServiceBinder binder)
     {
         binder.bind(InternalWindowContext.class, WindowContextImpl.class);
         binder.bind(ConversationLinkTransformer.class);
+
+        binder.bind(WindowStateManager.class, WindowStateManagerImpl.class);
     }
 
     @Contribute(RequestHandler.class)
@@ -54,6 +59,15 @@ public class ConversationModule
         configuration.add("poco-conversation", conversationLinkTransformer);
     }
 
+    @Contribute(ComponentClassTransformWorker2.class)
+    public static void provideTransformWorkers(
+        OrderedConfiguration<ComponentClassTransformWorker2> configuration)
+    {
+        // These must come after Property, since they actually delete fields
+        // that may still have the annotation
+        configuration.addInstance("WindowState", WindowStateWorker.class, "after:Property");
+    }
+
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
         final AssetSource assetSource, final ThreadLocale threadLocale, final Environment environment,
         final Request request)
@@ -64,7 +78,9 @@ public class ConversationModule
             {
                 JavaScriptSupport renderSupport = environment.peek(JavaScriptSupport.class);
 
-                Asset validators = assetSource.getUnlocalizedAsset("at/porscheinformatik/tapestry/conversation/poco-tapestry-conversation.js");
+                Asset validators =
+                    assetSource
+                        .getUnlocalizedAsset("at/porscheinformatik/tapestry/conversation/poco-tapestry-conversation.js");
 
                 renderSupport.importJavaScriptLibrary(validators);
 
