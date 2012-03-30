@@ -3,6 +3,7 @@ package at.porscheinformatik.tapestry.conversation.internal;
 import java.io.IOException;
 
 import org.apache.tapestry5.Link;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventRequestParameters;
 import org.apache.tapestry5.services.DelegatingRequest;
 import org.apache.tapestry5.services.PageRenderRequestParameters;
@@ -13,6 +14,8 @@ import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer;
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 
+import at.porscheinformatik.tapestry.conversation.SymbolConstants;
+
 /**
  * Inits {@link WindowIdContext} with window id encoded in request and encodes window id in all requests.
  */
@@ -20,14 +23,17 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     RequestFilter
 {
     private final InternalWindowContext windowContext;
+    private final String conversationName;
 
     /**
      * @param windowContext .
      */
-    public ConversationLinkTransformer(final InternalWindowContext windowContext)
+    public ConversationLinkTransformer(final InternalWindowContext windowContext,
+        @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)
     {
         super();
         this.windowContext = windowContext;
+        this.conversationName = conversationName;
     }
 
     /**
@@ -39,7 +45,8 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
 
         if (windowId != null)
         {
-            return defaultLink.copyWithBasePath("/WINDOWID=" + windowId.toString() + defaultLink.getBasePath());
+            return defaultLink.copyWithBasePath("/" + conversationName + "=" + windowId.toString()
+                + defaultLink.getBasePath());
         }
 
         return defaultLink;
@@ -62,7 +69,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
 
         if (windowId != null)
         {
-            return defaultLink.copyWithBasePath("/WINDOWID=" + windowId.toString() + defaultLink.getBasePath());
+            return defaultLink.copyWithBasePath("/" + conversationName + "=" + windowId.toString() + defaultLink.getBasePath());
         }
 
         return defaultLink;
@@ -83,14 +90,14 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     {
         String requestPath = request.getPath();
 
-        int windowIdIdx = requestPath.indexOf("WINDOWID=");
+        int windowIdIdx = requestPath.indexOf(conversationName + "=");
         if (windowIdIdx > 0)
         {
             int windowIdEndIdx = requestPath.indexOf('/', windowIdIdx);
 
-            String windowId = windowIdEndIdx > 0 
-                ? requestPath.substring(windowIdIdx + 9, windowIdEndIdx)
-                : requestPath.substring(windowIdIdx + 9);
+            String windowId = windowIdEndIdx > 0
+                ? requestPath.substring(windowIdIdx + conversationName.length()+1, windowIdEndIdx)
+                : requestPath.substring(windowIdIdx + conversationName.length()+1);
 
             windowContext.initWindowId(windowId);
 

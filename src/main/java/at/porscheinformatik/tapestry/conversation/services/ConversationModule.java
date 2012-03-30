@@ -7,7 +7,11 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.FactoryDefaults;
+import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.ioc.services.ThreadLocale;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.MarkupRenderer;
@@ -22,6 +26,7 @@ import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
 import at.porscheinformatik.tapestry.conversation.ConversationPersistenceConstants;
+import at.porscheinformatik.tapestry.conversation.SymbolConstants;
 import at.porscheinformatik.tapestry.conversation.internal.ConversationLinkTransformer;
 import at.porscheinformatik.tapestry.conversation.internal.InternalWindowContext;
 import at.porscheinformatik.tapestry.conversation.internal.WindowContextImpl;
@@ -82,9 +87,16 @@ public class ConversationModule
         configuration.addInstance("WindowState", WindowStateWorker.class, "after:Property");
     }
 
+    @Contribute(SymbolProvider.class)
+    @FactoryDefaults
+    public static void contributeFactoryDefaults(MappedConfiguration<String, Object> configuration)
+    {
+        configuration.add(SymbolConstants.CONVERSATION_ID, "conversation");
+    }
+
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
         final AssetSource assetSource, final ThreadLocale threadLocale, final Environment environment,
-        final Request request)
+        final Request request, @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)
     {
         MarkupRendererFilter injectScopesScript = new MarkupRendererFilter()
         {
@@ -98,7 +110,11 @@ public class ConversationModule
 
                 renderSupport.importJavaScriptLibrary(validators);
 
-                renderSupport.addInitializerCall("conversationInit", request.getContextPath());
+                JSONObject spec = new JSONObject();
+                spec.put("contextPath", request.getContextPath());
+                spec.put("conversationName", conversationName);
+
+                renderSupport.addInitializerCall("conversationInit", spec);
 
                 renderer.renderMarkup(writer);
             }
