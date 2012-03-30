@@ -16,6 +16,7 @@ import org.apache.tapestry5.services.PersistentFieldStrategy;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Session;
 
+import at.porscheinformatik.tapestry.conversation.ConversationPersistenceConstants;
 import at.porscheinformatik.tapestry.conversation.services.WindowContext;
 
 /**
@@ -30,7 +31,7 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
      * Prefix used to identify keys stored in the session.
      */
     static final String COLON = ":";
-    static final String PREFIX = "window" + COLON;
+    static final String PREFIX = ConversationPersistenceConstants.WINDOW + COLON;
 
     private final Request request;
 
@@ -51,16 +52,14 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
 
         StringBuilder builder = new StringBuilder(PREFIX);
         // TODO: What to do if id is null?
-        builder.append(windowContext.getId());
-        builder.append(':');
-        builder.append(pageName);
-        builder.append(':');
+        builder.append(windowContext.getId()).append(COLON).append(pageName).append(COLON);
 
         if (componentId != null)
+        {
             builder.append(componentId);
+        }
 
-        builder.append(':');
-        builder.append(fieldName);
+        builder.append(COLON).append(fieldName);
 
         Session session = request.getSession(persistedValue != null);
 
@@ -82,19 +81,16 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
         {
             return Collections.emptyList();
         }
-        // now check if the window
 
         List<PersistentFieldChange> result = newList();
 
-        String fullPrefix = PREFIX + windowContext.getId() + COLON + pageName + COLON;
+        final String fullPrefix = PREFIX + windowContext.getId() + COLON + pageName + COLON;
 
         for (String name : session.getAttributeNames(fullPrefix))
         {
             Object persistedValue = session.getAttribute(name);
 
-            Object applicationValue = persistedValue;
-
-            PersistentFieldChange change = buildChange(name, applicationValue);
+            PersistentFieldChange change = buildChange(name, persistedValue);
 
             result.add(change);
         }
@@ -120,9 +116,16 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
 
     }
 
+    /**
+     * @param name of the attribute in the session. <br>
+     *            Format: window:window_id:pagename:componentname:fieldname <br>
+     *            e.g.: window:1333089183380:PersistWindowStart::windowStateBean)
+     * @param newValue object to update the value in the session
+     * @return the {@link PersistentFieldChange}
+     */
     private PersistentFieldChange buildChange(String name, Object newValue)
     {
-        String[] chunks = name.split(":");
+        String[] chunks = name.split(COLON);
 
         // Will be empty string for the root component
         String componentId = chunks[3];
