@@ -4,7 +4,8 @@
 
     <h1>Conversation Window State between Pages - Step 1</h1>
     <p>Saves the entered data in a window state. Redirecs to another page where the entered data
-    is read from the window state.</p>
+    is read from the window state.
+    Uses the @WindowState Annotation to share data across pages</p>
     
     
     
@@ -21,7 +22,12 @@
     	<ul>
     		<li><t:pagelink page="WindowStateStart" target="_blank">Open this window in a new tab</t:pagelink></li>
     		<li><t:actionlink t:id="refresh">Refresh</t:actionlink></li>
+    		<li><t:pagelink page="WindowStateEnd">Next Page</t:pagelink></li>
     	</ul>
+    </p>
+    
+    <p>
+    	<t:sessiondisplay/>
     </p>
     
 </html>

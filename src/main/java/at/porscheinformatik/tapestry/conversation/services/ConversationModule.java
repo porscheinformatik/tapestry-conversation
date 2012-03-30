@@ -2,6 +2,8 @@ package at.porscheinformatik.tapestry.conversation.services;
 
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.MarkupWriter;
+import org.apache.tapestry5.internal.services.PersistentFieldManager;
+import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
@@ -10,6 +12,7 @@ import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.PersistentFieldStrategy;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
@@ -18,9 +21,11 @@ import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
+import at.porscheinformatik.tapestry.conversation.ConversationPersistenceConstants;
 import at.porscheinformatik.tapestry.conversation.internal.ConversationLinkTransformer;
 import at.porscheinformatik.tapestry.conversation.internal.InternalWindowContext;
 import at.porscheinformatik.tapestry.conversation.internal.WindowContextImpl;
+import at.porscheinformatik.tapestry.conversation.internal.WindowPersistenceFieldStrategy;
 import at.porscheinformatik.tapestry.conversation.internal.WindowStateManagerImpl;
 import at.porscheinformatik.tapestry.conversation.internal.transform.WindowStateWorker;
 
@@ -36,6 +41,15 @@ public class ConversationModule
         binder.bind(ConversationLinkTransformer.class);
 
         binder.bind(WindowStateManager.class, WindowStateManagerImpl.class);
+    }
+
+    @Contribute(PersistentFieldManager.class)
+    public void addPersistWindowStrategy(MappedConfiguration<String, PersistentFieldStrategy> configuration,
+        WindowContext windowContext,
+        Request request)
+    {
+        configuration.add(ConversationPersistenceConstants.WINDOW, new WindowPersistenceFieldStrategy(request,
+            windowContext));
     }
 
     @Contribute(RequestHandler.class)

@@ -1,0 +1,28 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	<style>
+		table.default, table.default tr th, table.default tr td{
+			border: black solid 1px;
+		}
+	</style>
+
+	<p>Curent elements in your session</p>
+	<t:if test="session">
+		<table class="default">
+			<thead>
+				<tr>
+					<th>Param</th>
+					<th>value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<t:loop source="parameterNames" element="tr" value="currentParam">
+					<td>${currentParam}</td>
+					<td>${value}</td>
+				</t:loop>
+			</tbody>
+		</table>
+		<p:else>
+			No data in your session!
+		</p:else>
+	</t:if>
+</t:container>

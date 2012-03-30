@@ -4,7 +4,8 @@
 
     <h1>Conversation Window State between Pages - Step 2</h1>
     
-    <p>Shows the entered data from the <t:pageLink page="WindowStateStart">previous page</t:pageLink></p>
+    <p>Shows the entered data from the <t:pageLink page="PersistWindowStart">previous page</t:pageLink></p>
+    <p>No data must be shown, because data is only stored in the previous page.</p>
     
     <t:if test="windowStateBean">
 	   	<t:beandisplay object="windowStateBean">

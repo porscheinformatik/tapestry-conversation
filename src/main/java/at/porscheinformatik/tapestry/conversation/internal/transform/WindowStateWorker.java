@@ -2,12 +2,10 @@ package at.porscheinformatik.tapestry.conversation.internal.transform;
 
 import java.util.List;
 
-import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.func.F;
 import org.apache.tapestry5.func.Predicate;
 import org.apache.tapestry5.internal.services.ComponentClassCache;
 import org.apache.tapestry5.internal.transform.ReadOnlyComponentFieldConduit;
-import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.model.MutableComponentModel;
 import org.apache.tapestry5.plastic.FieldConduit;
 import org.apache.tapestry5.plastic.InstanceContext;
@@ -33,7 +31,7 @@ public class WindowStateWorker implements ComponentClassTransformWorker2
 
     private final ComponentClassCache componentClassCache;
 
-    public WindowStateWorker(@InjectService("WindowStateManager") WindowStateManager windowStateManager, ComponentClassCache componentClassCache)
+    public WindowStateWorker(WindowStateManager windowStateManager, ComponentClassCache componentClassCache)
     {
         super();
         this.windowStateManager = windowStateManager;

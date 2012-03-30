@@ -7,7 +7,8 @@
     <ul>
     	<li><a t:type="pagelink" page="FormTest">Form Test</a></li>
     	<li><a t:type="pagelink" page="AjaxTest">Ajax Test</a></li>
-    	<li><a t:type="pagelink" page="WindowStateStart">Window State Test</a></li>
+    	<li><a t:type="pagelink" page="WindowStateStart">Window State Test @WindowState</a></li>
+    	<li><a t:type="pagelink" page="PersistWindowStart">Window State Test @Persist("window")</a></li>
     </ul>
     
 </html>
