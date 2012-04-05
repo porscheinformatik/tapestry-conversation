@@ -1,11 +1,14 @@
 package at.porscheinformatik.tapestry.conversation.services;
 
 import org.apache.tapestry5.ioc.ObjectLocator;
+import org.apache.tapestry5.ioc.annotations.UsesMappedConfiguration;
+import org.apache.tapestry5.services.ApplicationStateContribution;
 
 /**
  * TODO implement an state manager for WindowState
  * at the moment on interface due to multiple type injection in tapestry core
  */
+@UsesMappedConfiguration(key = Class.class, value = ApplicationStateContribution.class)
 public interface WindowStateManager
 {
     /**

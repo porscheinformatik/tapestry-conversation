@@ -7,11 +7,13 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.FactoryDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.ioc.services.ThreadLocale;
 import org.apache.tapestry5.json.JSONObject;
+import org.apache.tapestry5.services.ApplicationStatePersistenceStrategy;
 import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.MarkupRenderer;
@@ -29,6 +31,7 @@ import at.porscheinformatik.tapestry.conversation.ConversationPersistenceConstan
 import at.porscheinformatik.tapestry.conversation.SymbolConstants;
 import at.porscheinformatik.tapestry.conversation.internal.ConversationLinkTransformer;
 import at.porscheinformatik.tapestry.conversation.internal.InternalWindowContext;
+import at.porscheinformatik.tapestry.conversation.internal.WindowApplicationStatePersistenceStrategy;
 import at.porscheinformatik.tapestry.conversation.internal.WindowContextImpl;
 import at.porscheinformatik.tapestry.conversation.internal.WindowPersistenceFieldStrategy;
 import at.porscheinformatik.tapestry.conversation.internal.WindowStateManagerImpl;
@@ -44,8 +47,8 @@ public class ConversationModule
     {
         binder.bind(InternalWindowContext.class, WindowContextImpl.class);
         binder.bind(ConversationLinkTransformer.class);
-
         binder.bind(WindowStateManager.class, WindowStateManagerImpl.class);
+        binder.bind(ApplicationStatePersistenceStrategy.class, WindowApplicationStatePersistenceStrategy.class);
     }
 
     @Contribute(PersistentFieldManager.class)
@@ -123,4 +126,13 @@ public class ConversationModule
         configuration.add("InjectScopesScript", injectScopesScript, "after:*");
     }
 
+    /**
+     * Contributes the default "session" strategy.
+     */
+    public void contributeApplicationStatePersistenceStrategySource(
+        MappedConfiguration<String, ApplicationStatePersistenceStrategy> configuration,
+        @Local ApplicationStatePersistenceStrategy windowStrategy)
+    {
+        configuration.add("window", windowStrategy);
+    }
 }
