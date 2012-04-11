@@ -18,6 +18,7 @@ import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.PersistentFieldStrategy;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
@@ -30,12 +31,14 @@ import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 import at.porscheinformatik.tapestry.conversation.ConversationPersistenceConstants;
 import at.porscheinformatik.tapestry.conversation.SymbolConstants;
 import at.porscheinformatik.tapestry.conversation.internal.ConversationLinkTransformer;
+import at.porscheinformatik.tapestry.conversation.internal.DefaultConversationIdGenerator;
 import at.porscheinformatik.tapestry.conversation.internal.InternalWindowContext;
 import at.porscheinformatik.tapestry.conversation.internal.WindowApplicationStatePersistenceStrategy;
 import at.porscheinformatik.tapestry.conversation.internal.WindowContextImpl;
 import at.porscheinformatik.tapestry.conversation.internal.WindowPersistenceFieldStrategy;
 import at.porscheinformatik.tapestry.conversation.internal.WindowStateManagerImpl;
 import at.porscheinformatik.tapestry.conversation.internal.transform.WindowStateWorker;
+import at.porscheinformatik.tapestry.conversation.pages.WindowGeneratorPage;
 
 /**
  * Tapestry IoC Module for poco-tapestry5-conversation. CHECKSTYLE:OFF
@@ -49,6 +52,7 @@ public class ConversationModule
         binder.bind(ConversationLinkTransformer.class);
         binder.bind(WindowStateManager.class, WindowStateManagerImpl.class);
         binder.bind(ApplicationStatePersistenceStrategy.class, WindowApplicationStatePersistenceStrategy.class);
+        binder.bind(ConversationIdGenerator.class, DefaultConversationIdGenerator.class);
     }
 
     @Contribute(PersistentFieldManager.class)
@@ -99,10 +103,14 @@ public class ConversationModule
 
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
         final AssetSource assetSource, final ThreadLocale threadLocale, final Environment environment,
-        final Request request, @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)
+        final Request request, @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName,
+        final PageRenderLinkSource pageRenderLinkSource)
     {
+        final String uri = pageRenderLinkSource.createPageRenderLink(WindowGeneratorPage.class).toURI();
+
         MarkupRendererFilter injectScopesScript = new MarkupRendererFilter()
         {
+
             public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer)
             {
                 JavaScriptSupport renderSupport = environment.peek(JavaScriptSupport.class);
@@ -116,6 +124,7 @@ public class ConversationModule
                 JSONObject spec = new JSONObject();
                 spec.put("contextPath", request.getContextPath());
                 spec.put("conversationName", conversationName);
+                spec.put("url", uri);
 
                 renderSupport.addInitializerCall("conversationInit", spec);
 

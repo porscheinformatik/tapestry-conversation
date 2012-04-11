@@ -11,30 +11,31 @@ poco.conversationInit = function(spec)
 
 	if (!window.name || window.name.length < 3 || windowId != window.name)
 	{	
-		// alert("New window / changed window name");
-
-		var now = new Date();
-		window.name = now.getTime();
-		// TODO get windowId from server via AJAX call
-
-		if (window.location.href.indexOf(conversationName) >= 0)
+		var successHandler = function(transport)
 		{
-			window.location.href = window.location.href.replace(new RegExp(conversationName+"=[^\/]*"), conversationName + "=" + window.name)
-		}
-		else
-		{
-			if(window.location.pathname || '/' == window.location.pathname)
+			var reply = transport.responseJSON;
+			window.name = reply.conversationResponse;
+			
+			if (window.location.href.indexOf(conversationName) >= 0)
 			{
-				window.location.href = "/" + conversationName + "=" + window.name;
+				window.location.href = window.location.href.replace(new RegExp(conversationName+"=[^\/]*"), conversationName + "=" + window.name)
 			}
 			else
 			{
-				window.location.href = window.location.href.replace(window.location.pathname, "/"+conversationName +"=" + window.name + window.location.pathname);
+				if(window.location.pathname || '/' == window.location.pathname)
+				{
+					window.location.href = "/" + conversationName + "=" + window.name;
+				}
+				else
+				{
+					window.location.href = window.location.href.replace(window.location.pathname, "/"+conversationName +"=" + window.name + window.location.pathname);
+				}
 			}
 		}
-
-		return;
+		
+		Tapestry.ajaxRequest(spec.url, successHandler);
 	}
+	return;
 }
 
 Tapestry.Initializer.conversationInit = function(spec) { poco.conversationInit(spec) }
