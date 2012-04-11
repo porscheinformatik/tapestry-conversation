@@ -1,5 +1,6 @@
 package at.porscheinformatik.tapestry.conversation.services;
 
+
 /**
  * generator class to generate conversation ids
  * 

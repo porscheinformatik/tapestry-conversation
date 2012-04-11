@@ -32,8 +32,11 @@ poco.conversationInit = function(spec)
 				}
 			}
 		}
-		
-		Tapestry.ajaxRequest(spec.url, successHandler);
+		// send old window id 
+		Tapestry.ajaxRequest(spec.url, {
+			parameters : {"conversationOld" : windowId},
+			onSuccess : successHandler
+		});
 	}
 	return;
 }
