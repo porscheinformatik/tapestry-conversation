@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Activation Request Parameter Demo</h1>
+
+	<p>
+		Current: <em>${prop:param}</em><br/>
+		<t:actionlink t:id="increment">increment</t:actionlink>
+	</p>
+</html>
