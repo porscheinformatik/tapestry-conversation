@@ -28,7 +28,7 @@ poco.conversationInit = function(spec)
 				}
 				else
 				{
-					window.location.href = window.location.href.replace(window.location.pathname, "/"+conversationName +"=" + window.name + window.location.pathname);
+					window.location.href = window.location.href.replace(window.location.pathname,  window.location.pathname + "/"+conversationName +"=" + window.name);
 				}
 			}
 		}
