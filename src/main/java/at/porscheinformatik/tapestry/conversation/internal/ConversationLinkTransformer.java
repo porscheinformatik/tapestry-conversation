@@ -17,8 +17,7 @@ import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 import at.porscheinformatik.tapestry.conversation.SymbolConstants;
 
 /**
- * Inits {@link WindowIdContext} with window id encoded in request and encodes window id in all
- * requests.
+ * Inits {@link WindowIdContext} with window id encoded in request and encodes window id in all requests.
  */
 public class ConversationLinkTransformer implements PageRenderLinkTransformer, ComponentEventLinkTransformer,
     RequestFilter
@@ -30,7 +29,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
      * @param windowContext .
      */
     public ConversationLinkTransformer(final InternalWindowContext windowContext,
-                                       @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)
+        @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)
     {
         super();
         this.windowContext = windowContext;
@@ -40,7 +39,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     /**
      * {@inheritDoc}
      */
-    public Link transformComponentEventLink(final Link defaultLink, final ComponentEventRequestParameters parameters)
+    public Link transformComponentEventLink(Link defaultLink, ComponentEventRequestParameters parameters)
     {
         String windowId = windowContext.getId();
 
@@ -56,7 +55,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     /**
      * {@inheritDoc}
      */
-    public ComponentEventRequestParameters decodeComponentEventRequest(final Request request)
+    public ComponentEventRequestParameters decodeComponentEventRequest(Request request)
     {
         return null;
     }
@@ -64,7 +63,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     /**
      * {@inheritDoc}
      */
-    public Link transformPageRenderLink(final Link defaultLink, final PageRenderRequestParameters parameters)
+    public Link transformPageRenderLink(Link defaultLink, PageRenderRequestParameters parameters)
     {
         String windowId = windowContext.getId();
 
@@ -80,7 +79,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     /**
      * {@inheritDoc}
      */
-    public PageRenderRequestParameters decodePageRenderRequest(final Request request)
+    public PageRenderRequestParameters decodePageRenderRequest(Request request)
     {
         return null;
     }
@@ -88,7 +87,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     /**
      * {@inheritDoc}
      */
-    public boolean service(Request request, final Response response, final RequestHandler handler) throws IOException
+    public boolean service(Request request, Response response, RequestHandler handler) throws IOException
     {
         String requestPath = request.getPath();
 
