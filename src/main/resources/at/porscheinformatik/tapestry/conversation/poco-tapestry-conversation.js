@@ -16,7 +16,7 @@ poco.conversationInit = function(spec)
 			var reply = transport.responseJSON;
 			window.name = reply.conversationResponse;
 			
-			if (window.location.href.indexOf(conversationName) >= 0)
+			if (window.location.href.indexOf(conversationName + "=") >= 0)
 			{
 				window.location.href = window.location.href.replace(new RegExp(conversationName+"=[^\/]*"), conversationName + "=" + window.name)
 			}
@@ -24,7 +24,7 @@ poco.conversationInit = function(spec)
 			{
 				if(window.location.pathname || '/' == window.location.pathname)
 				{
-					window.location.href = "/" + conversationName + "=" + window.name;
+					window.location.href = window.location.pathname + "/" + conversationName + "=" + window.name;
 				}
 				else
 				{
