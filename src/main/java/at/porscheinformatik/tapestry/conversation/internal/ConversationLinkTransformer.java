@@ -3,6 +3,7 @@ package at.porscheinformatik.tapestry.conversation.internal;
 import java.io.IOException;
 
 import org.apache.tapestry5.Link;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ComponentEventRequestParameters;
 import org.apache.tapestry5.services.DelegatingRequest;
@@ -25,6 +26,28 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
     private final InternalWindowContext windowContext;
     private final String conversationName;
 
+    @Inject
+    private Request request;
+
+    private Link transformWindowLink(final Link defaultLink)
+    {
+        String windowId = windowContext.getId();
+
+        if (windowId != null)
+        {
+            String basePath = defaultLink.getBasePath();
+            String contextPath = request.getContextPath();
+            String windowParam = "/" + conversationName + "=" + windowId.toString();
+
+            String newPath = "".equals(contextPath)
+                ? windowParam + basePath
+                : basePath.replace(contextPath, contextPath + windowParam);
+
+            return defaultLink.copyWithBasePath(newPath);
+        }
+        return defaultLink;
+    }
+
     /**
      * @param windowContext .
      */
@@ -41,15 +64,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
      */
     public Link transformComponentEventLink(Link defaultLink, ComponentEventRequestParameters parameters)
     {
-        String windowId = windowContext.getId();
-
-        if (windowId != null)
-        {
-            return defaultLink.copyWithBasePath("/" + conversationName + "=" + windowId.toString()
-                + defaultLink.getBasePath());
-        }
-
-        return defaultLink;
+        return transformWindowLink(defaultLink);
     }
 
     /**
@@ -65,14 +80,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
      */
     public Link transformPageRenderLink(Link defaultLink, PageRenderRequestParameters parameters)
     {
-        String windowId = windowContext.getId();
-
-        if (windowId != null)
-        {
-            return defaultLink.copyWithBasePath("/" + conversationName + "=" + windowId.toString() + defaultLink.getBasePath());
-        }
-
-        return defaultLink;
+        return transformWindowLink(defaultLink);
     }
 
     /**
