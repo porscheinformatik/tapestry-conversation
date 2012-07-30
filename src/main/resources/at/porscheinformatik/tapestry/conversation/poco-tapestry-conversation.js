@@ -11,9 +11,8 @@ poco.conversationInit = function(spec)
 
 	if (!window.name || window.name.length < 3 || windowId != window.name)
 	{	
-		var successHandler = function(transport)
+		var successHandler = function(reply)
 		{
-			var reply = transport.responseJSON;
 			var conversationId = reply.conversationResponse;
 			if (conversationId === undefined)
 			{
@@ -40,11 +39,27 @@ poco.conversationInit = function(spec)
 				}
 			}
 		}
-		// send old window id 
-		Tapestry.ajaxRequest(spec.url, {
-			parameters : {"conversationOld" : windowId},
-			onSuccess : successHandler
-		});
+		
+		// send old window id
+		if (!!Tapestry.ajaxRequest) 
+		{
+			Tapestry.ajaxRequest(spec.url, {
+				parameters : {"conversationOld" : windowId},
+				onSuccess : function(data) { successHandler(data.responseJSON); }
+			});
+		}
+		else if (typeof(jQuery) !== "undefined" && !!jQuery.tapestry && !!jQuery.tapestry.utils && !!jQuery.tapestry.utils.ajaxRequest) 
+		{
+			// GOT5
+			jQuery.tapestry.utils.ajaxRequest({
+				url: spec.url,
+				data : {"conversationOld" : windowId},
+				success : successHandler,
+				cache: false
+			});
+		} 
+		
+
 	}
 	return;
 }
