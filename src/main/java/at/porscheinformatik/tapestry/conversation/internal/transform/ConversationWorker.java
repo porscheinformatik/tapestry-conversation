@@ -66,9 +66,8 @@ public class ConversationWorker implements ComponentClassTransformWorker2
         }
 
         final Conversation conversation = plasticClass.getAnnotation(Conversation.class);
-        final boolean conversationActive = conversation != null && conversation.active();
 
-        if (conversationAlwaysActive || conversationActive)
+        if (conversation == null && conversationAlwaysActive || conversation != null && conversation.active())
         {
             // add the conversation check
             addAdvice(plasticClass, model);
