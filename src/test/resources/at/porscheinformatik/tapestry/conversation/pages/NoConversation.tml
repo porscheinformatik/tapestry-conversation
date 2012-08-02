@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+	<h1>Conversation Exclusion</h1>
+    <p>
+    	This page has no conversation handling. If you 
+    	<t:pagelink page="NoConversation">open it in a new tab</t:pagelink>, 
+    	it will not attempt to reload it.
+    </p>
+    <p>
+    	The conversation handling is turned on by default, this can be configured
+    	using the <tt>SymbolConstants.CONVERSATION_ALWAYS_ACTIVE</tt> default.
+    	Either way, by using the <tt>Conversation</tt> annotation, this behaviour
+    	can be overwritten.
+    </p>
+    <p>
+    	In a regular application, the login-page will likely be excluded from
+    	conversation handling.
+    </p>
+
+</html>

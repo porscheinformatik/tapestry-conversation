@@ -9,6 +9,7 @@
     	<li><a t:type="pagelink" page="AjaxTest">Ajax Test</a></li>
     	<li><a t:type="pagelink" page="WindowStateStart">Window State Test @WindowState</a></li>
     	<li><a t:type="pagelink" page="PersistWindowStart">Window State Test @Persist("window")</a></li>
+    	<li><a t:type="pagelink" page="NoConversation">Turning off Conversations</a></li>
     </ul>
     
 </html>
