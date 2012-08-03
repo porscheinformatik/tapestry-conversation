@@ -61,4 +61,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshot Repository</name>
+			<url>${repository.snapshots}</url>
+		</snapshotRepository>
+		<repository>
+			<id>inhouse</id>
+			<name>Internal Repository</name>
+			<url>${repository.release}</url>
+		</repository>
+		<site>
+			<id>site</id>
+			<url>${repository.site}</url>
+		</site>
+	</distributionManagement>
 </project>
