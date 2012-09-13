@@ -10,7 +10,7 @@
 	<description>Tapestry Conversation and Window State Handling </description>
 
 	<properties>
-		<tapestry.version>5.3.3</tapestry.version>
+		<tapestry.version>5.3.5</tapestry.version>
 		<java.compile.version>1.6</java.compile.version>
 	</properties>
 

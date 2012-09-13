@@ -54,5 +54,14 @@ public class WindowStateIntegrationTest extends SeleniumTestCase
         clickAndWait("link=In Zone");
         assert getLocation().contains("conversation");
     }
+    
+    @Test
+    public void testSetupRender() throws InterruptedException {
+        
+        open("/index");
+        Thread.sleep(1000L);
+        clickAndWait("link=Check setup render");
+        assertTextPresent("text was set in setup render");
+    }
 
 }
