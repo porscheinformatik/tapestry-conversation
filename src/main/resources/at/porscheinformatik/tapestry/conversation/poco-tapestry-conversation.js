@@ -21,10 +21,11 @@ poco.conversationInit = function(spec)
 			
 			window.name = conversationId;
 			
+			
 			if (window.location.href.indexOf(conversationName + "=") >= 0)
 			{
 				// adapt url
-				window.location.href = window.location.href.replace(new RegExp(conversationName+"=[^\/\?]*"), conversationName + "=" + window.name)
+				window.location.href = window.location.href.replace(new RegExp(conversationName+"=[^\/\?]*"), conversationName + "=" + conversationId)
 			}
 			else
 			{
@@ -35,9 +36,12 @@ poco.conversationInit = function(spec)
 				}
 				else
 				{
-					window.location.href = window.location.href.replace(contextPath, contextPath + "/" + conversationName + "=" + window.name);
+					window.location.href = window.location.href.replace(contextPath, contextPath + "/" + conversationName + "=" + conversationId);
 				}
 			}
+			// our beloved browser will not update the window.name if it is already provided by a javascript:window.open(url, 'WINDOW') call
+			// the window name should be set after the redirect
+			window.name = conversationId;
 		}
 		
 		// send old window id

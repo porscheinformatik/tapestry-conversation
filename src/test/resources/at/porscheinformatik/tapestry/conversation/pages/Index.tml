@@ -11,6 +11,7 @@
     	<li><a t:type="pagelink" page="PersistWindowStart">Window State Test @Persist("window")</a></li>
     	<li><a t:type="pagelink" page="NoConversation">Turning off Conversations</a></li>
     	<li><a t:type="pagelink" page="SetupRenderTest">Check setup render</a></li>
+    	<li><a t:type="pagelink" page="JavascriptWindowOpenTest">Javascript window open</a></li>
     </ul>
     
 </html>

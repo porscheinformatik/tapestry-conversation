@@ -11,7 +11,6 @@ import org.testng.xml.XmlTest;
 
 public class WindowStateIntegrationTest extends SeleniumTestCase
 {
-
     public static final String TIMEOUT = "10000";// 10 sec
 
     @BeforeTest(groups = "beforeStartup")
@@ -48,8 +47,10 @@ public class WindowStateIntegrationTest extends SeleniumTestCase
         clickAndWait("link=Ajax Test");
         assert getLocation().contains("conversation");
         waitForAjaxRequestsToComplete(TIMEOUT);
+        Thread.sleep(1000L);
         click("link=Load Zone");
-        waitForAjaxRequestsToComplete(TIMEOUT);
+//        waitForAjaxRequestsToComplete(TIMEOUT);
+        Thread.sleep(1000L);
         assertTextPresent("In Zone");
         clickAndWait("link=In Zone");
         assert getLocation().contains("conversation");
@@ -63,5 +64,4 @@ public class WindowStateIntegrationTest extends SeleniumTestCase
         clickAndWait("link=Check setup render");
         assertTextPresent("text was set in setup render");
     }
-
 }
