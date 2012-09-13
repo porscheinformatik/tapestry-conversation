@@ -2,8 +2,6 @@
 
 Window and conversation scope for Tapestry web framework.
 
-**This module is not working yet!**
-
 ## Usage
 
 In your pages and components you can use the <code>@WindowState</code> annotation to mark objects as per-window.
