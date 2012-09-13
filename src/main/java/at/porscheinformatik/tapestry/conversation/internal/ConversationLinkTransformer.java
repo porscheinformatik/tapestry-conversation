@@ -16,6 +16,7 @@ import org.apache.tapestry5.services.linktransform.ComponentEventLinkTransformer
 import org.apache.tapestry5.services.linktransform.PageRenderLinkTransformer;
 
 import at.porscheinformatik.tapestry.conversation.SymbolConstants;
+import at.porscheinformatik.tapestry.conversation.utils.Utils;
 
 /**
  * Inits {@link WindowIdContext} with window id encoded in request and encodes window id in all requests.
@@ -39,10 +40,14 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
             String contextPath = request.getContextPath();
             String windowParam = "/" + conversationName + "=" + windowId.toString();
 
+            
+            // it can happen that the basepath already contains a name like the contextPath - this one should not be replaced
+            // e.g. http://localhost:app/app/page.thm
+            
             String newPath = "".equals(contextPath)
                 ? windowParam + basePath
-                : basePath.replace(contextPath, contextPath + windowParam);
-
+                : Utils.replace(basePath, contextPath, contextPath + windowParam, 1);
+                    
             return defaultLink.copyWithBasePath(newPath);
         }
         return defaultLink;
@@ -104,8 +109,8 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
             int windowIdEndIdx = requestPath.indexOf('/', windowIdIdx);
 
             String windowId = windowIdEndIdx > 0
-                ? requestPath.substring(windowIdIdx + conversationName.length()+1, windowIdEndIdx)
-                : requestPath.substring(windowIdIdx + conversationName.length()+1);
+                ? requestPath.substring(windowIdIdx + conversationName.length() + 1, windowIdEndIdx)
+                : requestPath.substring(windowIdIdx + conversationName.length() + 1);
 
             windowContext.initWindowId(windowId);
 
