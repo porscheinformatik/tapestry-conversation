@@ -37,6 +37,10 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
 
     private final WindowContext windowContext;
 
+    /**
+     * @param request .
+     * @param windowContext .
+     */
     public WindowPersistenceFieldStrategy(Request request, WindowContext windowContext)
     {
         super();
@@ -44,6 +48,7 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
         this.windowContext = windowContext;
     }
 
+    @Override
     public void postChange(String pageName, String componentId, String fieldName, Object newValue)
     {
         assert InternalUtils.isNonBlank(pageName);
@@ -70,9 +75,9 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
         {
             session.setAttribute(builder.toString(), persistedValue);
         }
-
     }
 
+    @Override
     public Collection<PersistentFieldChange> gatherFieldChanges(String pageName)
     {
         Session session = request.getSession(false);
@@ -98,6 +103,7 @@ public class WindowPersistenceFieldStrategy implements PersistentFieldStrategy
         return result;
     }
 
+    @Override
     public void discardChanges(String pageName)
     {
         Session session = request.getSession(false);

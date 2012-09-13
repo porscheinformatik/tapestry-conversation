@@ -23,6 +23,7 @@ import at.porscheinformatik.tapestry.conversation.pages.WindowGeneratorPage;
 
 /**
  * This worker handles the injection of the conversation-check script.
+ * 
  * @author Michael Aspetsberger
  */
 public class ConversationWorker implements ComponentClassTransformWorker2
@@ -34,12 +35,20 @@ public class ConversationWorker implements ComponentClassTransformWorker2
     private final boolean conversationAlwaysActive;
     private final AssetSource assetSource;
 
+    /**
+     * @param javaScriptSupport .
+     * @param pageRenderLinkSource .
+     * @param request .
+     * @param conversationName .
+     * @param conversationAlwaysActive .
+     * @param assetSource .
+     */
     public ConversationWorker(final JavaScriptSupport javaScriptSupport,
-                              final PageRenderLinkSource pageRenderLinkSource,
-                              final Request request,
-                              @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName,
-                              @Symbol(SymbolConstants.CONVERSATION_ALWAYS_ACTIVE) final boolean conversationAlwaysActive,
-                              final AssetSource assetSource)
+        final PageRenderLinkSource pageRenderLinkSource,
+        final Request request,
+        @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName,
+        @Symbol(SymbolConstants.CONVERSATION_ALWAYS_ACTIVE) final boolean conversationAlwaysActive,
+        final AssetSource assetSource)
     {
         this.javaScriptSupport = javaScriptSupport;
         this.pageRenderLinkSource = pageRenderLinkSource;

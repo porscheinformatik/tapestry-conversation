@@ -40,14 +40,14 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
             String contextPath = request.getContextPath();
             String windowParam = "/" + conversationName + "=" + windowId.toString();
 
-            
-            // it can happen that the basepath already contains a name like the contextPath - this one should not be replaced
+            // It can happen that the basepath already contains a name like the 
+            // contextPath - this one should not be replaced
             // e.g. http://localhost:app/app/page.thm
-            
+
             String newPath = "".equals(contextPath)
                 ? windowParam + basePath
                 : Utils.replace(basePath, contextPath, contextPath + windowParam, 1);
-                    
+
             return defaultLink.copyWithBasePath(newPath);
         }
         return defaultLink;
@@ -55,6 +55,7 @@ public class ConversationLinkTransformer implements PageRenderLinkTransformer, C
 
     /**
      * @param windowContext .
+     * @param conversationName injected symbol {@link SymbolConstants#CONVERSATION_ID}
      */
     public ConversationLinkTransformer(final InternalWindowContext windowContext,
         @Symbol(SymbolConstants.CONVERSATION_ID) final String conversationName)

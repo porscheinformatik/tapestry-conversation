@@ -11,6 +11,7 @@ import org.apache.tapestry5.ioc.annotations.UseWith;
 
 /**
  * Marker annotation for a page that should be part of a conversation.
+ *
  * @author Michael Aspetsberger
  */
 @Target(ElementType.TYPE)
@@ -22,7 +23,10 @@ public @interface Conversation
     /**
      * Indicates whether the conversation handling should be active for this page. When the handling
      * is active, a script will be injected that checks the conversation state.
-     * @return <code>true</code> if conversations should be active, otherwise false.
+     * <p>
+     * <code>true</code> if conversations should be active, otherwise <code>false</code>.
+     * <p> 
+     * Default is <code>true</code>.
      */
     boolean active() default true;
 }

@@ -31,6 +31,10 @@ public class WindowStateWorker implements ComponentClassTransformWorker2
 
     private final ComponentClassCache componentClassCache;
 
+    /**
+     * @param windowStateManager .
+     * @param componentClassCache .
+     */
     public WindowStateWorker(WindowStateManager windowStateManager, ComponentClassCache componentClassCache)
     {
         super();
@@ -38,6 +42,7 @@ public class WindowStateWorker implements ComponentClassTransformWorker2
         this.componentClassCache = componentClassCache;
     }
 
+    @Override
     public void transform(PlasticClass plasticClass, TransformationSupport support, MutableComponentModel model)
     {
         for (PlasticField field : plasticClass.getFieldsWithAnnotation(WindowState.class))

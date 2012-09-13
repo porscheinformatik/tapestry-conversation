@@ -57,8 +57,8 @@ public class WindowStateIntegrationTest extends SeleniumTestCase
     }
     
     @Test
-    public void testSetupRender() throws InterruptedException {
-        
+    public void testSetupRender() throws InterruptedException 
+    {
         open("/index");
         Thread.sleep(1000L);
         clickAndWait("link=Check setup render");
