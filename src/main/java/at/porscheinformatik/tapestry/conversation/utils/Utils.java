@@ -5,7 +5,7 @@ package at.porscheinformatik.tapestry.conversation.utils;
  * 
  * @author Gerold Glaser
  */
-public class Utils
+public final class Utils
 {
     /**
      * Represents a failed index search.
