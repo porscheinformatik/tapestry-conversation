@@ -26,16 +26,16 @@ public class WindowStateIntegrationTest extends SeleniumTestCase
         xmlTest.setParameters(parameters);
     }
 
-    @Test
-    public void windowIdPersistsOnPageLink() throws InterruptedException
-    {
-        open("/index");
-        // TODO: it works only with this sleep
-        // waitForPage and so on does not work
-        Thread.sleep(1000L);
-        clickAndWait("link=Form Test");
-        assert getLocation().contains("conversation");
-    }
+//    @Test
+//    public void windowIdPersistsOnPageLink() throws InterruptedException
+//    {
+//        open("/index");
+//        // TODO: it works only with this sleep
+//        // waitForPage and so on does not work
+//        Thread.sleep(1000L);
+//        clickAndWait("link=Form Test");
+//        assert getLocation().contains("conversation");
+//    }
 
     @Test
     public void windowIdPersistsOnAjax() throws InterruptedException
