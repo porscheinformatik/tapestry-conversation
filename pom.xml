@@ -3,7 +3,7 @@
 
 	<groupId>at.porscheinformatik</groupId>
 	<artifactId>tapestry-conversation</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<name>Tapestry Conversation</name>
 	<description>Tapestry Conversation and Window State Handling </description>
@@ -17,7 +17,8 @@
     	<connection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</connection>
     	<developerConnection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</developerConnection>
     	<url>http://github.com/porscheinformatik/tapestry-conversation.git</url>
-  	</scm>
+  	  <tag>tapestry-conversation-1.0</tag>
+  </scm>
 
 	<dependencyManagement>
 		<dependencies>
