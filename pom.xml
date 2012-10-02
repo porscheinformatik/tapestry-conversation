@@ -3,7 +3,7 @@
 
 	<groupId>at.porscheinformatik</groupId>
 	<artifactId>tapestry-conversation</artifactId>
-	<version>1.0</version>
+	<version>1.0-SNAPSHOT</version>
 
 	<name>Tapestry Conversation</name>
 	<description>Tapestry Conversation and Window State Handling </description>
