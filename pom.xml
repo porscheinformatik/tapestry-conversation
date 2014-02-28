@@ -9,16 +9,16 @@
 	<description>Tapestry Conversation and Window State Handling </description>
 
 	<properties>
-		<tapestry.version>5.3.5</tapestry.version>
+		<tapestry.version>5.3.7</tapestry.version>
 		<java.compile.version>1.6</java.compile.version>
 	</properties>
-	
+
 	<scm>
-    	<connection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</connection>
-    	<developerConnection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</developerConnection>
-    	<url>http://github.com/porscheinformatik/tapestry-conversation.git</url>
-  	  <tag>HEAD</tag>
-  </scm>
+		<connection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</connection>
+		<developerConnection>scm:git:http://github.com/porscheinformatik/tapestry-conversation.git</developerConnection>
+		<url>http://github.com/porscheinformatik/tapestry-conversation.git</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<dependencyManagement>
 		<dependencies>
@@ -53,7 +53,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>3.1</version>
 				<configuration>
 					<source>${java.compile.version}</source>
 					<target>${java.compile.version}</target>
@@ -63,17 +63,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.16</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.3.2</version>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2</version>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -85,7 +85,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>snapshots</id>
